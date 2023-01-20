@@ -1,0 +1,79 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var \AdvancedSearch\Api\Representation\SearchConfigRepresentation $searchPage
+ * @var \AdvancedSearch\Query $query
+ * @var \AdvancedSearch\Response $response
+ * @var string $title
+ * @var string $resourceName
+ */
+
+$resources = $response->getResources($resourceName);
+// A check is done: when page is not first, the resources may be empty even with results.
+if (!$resources) return;
+
+$plugins = $this->getHelperPluginManager();
+$escape = $plugins->get('escapeHtml');
+$assetUrl = $plugins->get('assetUrl');
+$translate = $plugins->get('translate');
+$hyperlink = $plugins->get('hyperlink');
+$thumbnailHelper = $plugins->get('thumbnail');
+$api = $plugins->get('api');
+
+$setting = $plugins->get($site ? 'siteSetting' : 'setting');
+
+$filterLocale = (bool) $setting('filter_locale_values');
+$siteLang = $plugins->get('lang')();
+$lang = $filterLocale ? $siteLang : null;
+$langValue = $filterLocale ? [$siteLang, ''] : null;
+
+$headingTerm = $setting('browse_heading_property_term');
+
+$gridListMode = $searchPage ? $searchPage->subSetting('display', 'grid_list_mode', 'auto') : 'auto';
+
+$defaultThumbnail = '<img src="' . $assetUrl('thumbnails/default.png', 'Omeka', true) . '" title="' . $translate('No media') . '"/>';
+
+$properties = $this->themeSetting("browse_body_properties");
+if( $properties == null)
+    $properties = [];
+?>
+
+<?php if ($title): ?>
+<h3><?= $escape($title) ?></h3>
+<?php endif; ?>
+<ul class="resource-list search-results-list<?= $gridListMode === 'list_only' ? ' list' : ($gridListMode === 'grid_only' ? ' grid' : '') ?>">
+    <?php /** @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource */
+    foreach ($resources as $resource):
+        $resourceType = $resource->resourceName();
+        $media = $resource->primaryMedia();
+        $thumbnail = $media ? $thumbnailHelper($media, 'medium') : null;
+        $heading = $headingTerm ? $resource->value($headingTerm, ['lang' => $langValue]) : null;
+        $heading = $heading ? $heading->asHtml() : $escape($resource->displayTitle($translate('[Untitled]'), $lang));
+    ?>
+        <li class="resource <?= $resourceType ?>">
+            <?php if($thumbnail): ?>
+                <div class="resource-thumbnail">
+                    <?= $hyperlink->raw($thumbnail, $resource->url(), ['class' => 'resource-link']) ?>
+                </div>
+            <?php endif; ?>
+            <div class="resource-metadata">
+                <h4><?= $resource->linkRaw($heading) ?></h4>
+                <?php
+                    $values = $resource->values();
+                    $valuesBody = ["values" => []];
+                    foreach($values as $term => $propertyData){
+                        if(in_array($term, $properties))
+                            $valuesBody["values"][$term] = $values[$term];
+                    }
+                ?>
+                <?php if(count($valuesBody["values"]) > 0): ?>
+                    <div class="properties">
+                        <?= $this->partial("common/resource-values", $valuesBody) ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </li>
+    <?php endforeach; ?>
+</ul>
+<?php $this->trigger('view.browse.after'); ?>

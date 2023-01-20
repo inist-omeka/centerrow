@@ -1,0 +1,94 @@
+<?php
+$translate = $this->plugin('translate');
+$escape = $this->plugin('escapeHtml');
+$labelInfo = $this->setting('property_label_information');
+
+$url = $this->plugin('url');
+$siteSlug = $this->params()->fromRoute('site-slug');
+
+$serverHost = "https://".$_SERVER["HTTP_HOST"];
+
+$searchConfig = $this->siteSetting("advancedsearch_main_config");
+$searchPage = $this->api()->read("search_configs", $searchConfig)->getContent()->path();
+
+$rebonds = $this->themeSetting("rebonds");
+if($rebonds == null)
+    $rebonds = [];
+
+$licenses = ["by-nc-sa", "by-nc-nd", "by-nd", "by-sa", "by-nc", "by", "licence-ouverte-open-licence"];
+
+$sortValues = $this->themeSetting("sort_values");
+if($sortValues == null)
+    $sortValues = [];
+?>
+
+<?php foreach ($values as $term => $propertyData): ?>
+    <?php $id = str_replace(":", "-", $term); ?>
+    <div class="property" id="<?php echo $id; ?>">
+        <h4><?php
+            if ($propertyData['alternate_label']):
+                echo $escape($propertyData['alternate_label']);
+            else:
+                echo $escape($translate($propertyData['property']->label()));
+            endif;
+        ?></h4>
+        <?php if ('term' === $labelInfo): ?>
+        <span class="field-term">(<?php echo $escape($propertyData['property']->term()); ?>)</span>
+        <?php elseif ('vocab' === $labelInfo): ?>
+        <span class="field-term">(<?php echo $escape($propertyData['property']->vocabulary()->label()); ?>)</span>
+        <?php endif; ?></h4>
+        <div class="values">
+            <?php
+                if(in_array($term, $sortValues))
+                    usort($propertyData['values'], function($a, $b){ return strcmp($this->stripAccents($a), $this->stripAccents($b)); });
+            ?>
+            <?php foreach ($propertyData['values'] as $value): ?>
+                <?php
+                $valueType = $value->type();
+                $class = ['value'];
+                if ('resource' == $valueType || strpos($valueType, 'resource') !== false) {
+                    $class[] = 'resource';
+                    $class[] = $escape($value->valueResource()->resourceName());
+                } elseif ('uri' == $valueType) {
+                    $class[] = 'uri';
+                }
+                if (!$value->isPublic()) {
+                    $class[] = 'private';
+                }
+                ?>
+                <div class="<?php echo implode(' ', $class); ?>" lang="<?php echo $escape($value->lang()); ?>"><?php
+                    if ($language = $value->lang()):
+                        ?><span class="language"><?php echo $language; ?></span><?php
+                    endif;
+                    if($valueType == "literal"){
+                        if(in_array($term, $rebonds)){
+                            $facet = str_replace(":", "_", $term)."_ss";
+                            ?><a href="<?= $url('site', ['site-slug' => $siteSlug]); ?>/<?= $searchPage ?>?facet[<?= $facet ?>][]=<?= urlencode($value) ?>"><?= $value ?></a><?php
+                        }
+                        else
+                            echo $value;
+                    }else if(strpos($valueType, 'resource') !== false)
+                        echo str_replace("square", "medium", $value->asHtml());
+                    else if($valueType == "uri"){
+                        if($term == "dcterms:license"){
+                            foreach($licenses as $license){
+                                if(strpos($value->uri(), "/".$license."/") !== false){
+                                    $type = strpos($value->uri(), "creativecommons") ? "cc" : "etalab";
+                                    $img = ($type == "cc") ? $type."-".$license : $license;
+                                    ?><img class="license-<?= $type ?>" src="<?= $this->assetUrl("img/licenses/".$img.".png") ?>" alt="<?= $img ?>"><?php
+                                }
+                            }
+                        }
+                        echo $value->asHtml();
+                        $valueHost = parse_url($value->uri())["host"];
+                        if($valueHost != $serverHost){
+                            ?><a href="<?= $value->uri() ?>" target="_blank"><i class="fas fa-external-link-alt"></i></a><?php
+                        }
+                    }
+                    else
+                        echo $value->asHtml();
+                ?></div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endforeach; ?>

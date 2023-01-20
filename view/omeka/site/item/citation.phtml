@@ -1,0 +1,16 @@
+<?php
+$months = ["January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre"];
+?>
+<div class="properties" id="item-citation">
+    <div class="property">
+        <h4>Citer cette ressource</h4>
+        <div class="values">
+            <div class="value">
+				<?= $item->title() ?>, 
+				dans <?= $site->title() ?>, 
+				consulté le <?= date("j ").$months[date("F")].date(" Y, ") ?>
+				https://<?= $_SERVER['HTTP_HOST'] ?><?= $_SERVER['REQUEST_URI'] ?>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<?php
+	$searchConfig = $this->siteSetting("advancedsearch_main_config");
+	$searchPage = $this->api()->read("search_configs", $searchConfig)->getContent()->path();
+?>
+<form action="<?= $site->url() ?>/<?= $searchPage ?>" id="search" >
+	<input type="text" name="q" placeholder="<?= $this->translate("Search") ?>">
+	<button><i class="fas fa-search"></i></button>
+</form>

@@ -1,0 +1,9 @@
+<?php 
+echo $this->htmlElement('body')
+	->setAttribute("class", "page")
+	->setAttribute("id", $page->slug());
+
+$this->headLink()->appendStylesheet($this->assetUrl('css/page.css'));
+?>
+
+<?= $this->content; ?>
