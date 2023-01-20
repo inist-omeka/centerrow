@@ -9,15 +9,15 @@ $this->headTitle()->append($this->setting('installation_title', 'Omeka S'));
 $this->headLink()->prependStylesheet('//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic');
 $this->headLink()->prependStylesheet($this->assetUrl('css/iconfonts.css', 'Omeka'));
 $this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
+$this->headLink()->appendStylesheet($this->assetUrl('css/custom.css'));
+$this->headLink()->appendStylesheet($this->assetUrl('css/resource.css'));
 $this->headScript()->prependFile($this->assetUrl('js/centerrow.js'));
+$this->headScript()->prependFile($this->assetUrl('js/custom.js'));
+$this->headScript()->prependFile($this->assetUrl('js/qrcode.min.js'));
 $this->headScript()->prependFile($this->assetUrl('js/jquery-accessibleMegaMenu.js'));
 $this->headScript()->prependFile($this->assetUrl('js/global.js', 'Omeka'));
 $this->headScript()->prependFile($this->assetUrl('vendor/jquery/jquery.min.js', 'Omeka'));
 $this->jsTranslate();
-$banner = $this->themeSettingAssetUrl('banner');
-$bannerHeight = $this->themeSetting('banner_height');
-$bannerHeightMobile = $this->themeSetting('banner_height_mobile');
-$bannerPosition = ($this->themeSetting('banner_position')) ? str_replace('_','-', $this->themeSetting('banner_position')) : 'center';
 $this->trigger('view.layout');
 $userBar = $this->userBar();
 ?>
@@ -29,21 +29,7 @@ $userBar = $this->userBar();
         <?php echo $this->headLink(); ?>
         <?php echo $this->headStyle(); ?>
         <?php echo $this->headScript(); ?>
-        <style>
-            .banner {
-                height: <?php echo ($bannerHeight !== '') ? $bannerHeight: 'auto'  ?>;
-                align-items: <?php echo $bannerPosition; ?>;
-            }
-        <?php if ($bannerHeightMobile !== ''): ?>
-            @media screen and (max-width:640px) {
-                .banner {
-                    height: <?php echo $bannerHeightMobile; ?>;
-                }
-            }
-        <?php endif; ?>
-        </style>
     </head>
-
     <?php echo $this->htmlElement('body'); ?>
         <a id="skipnav" href="#content"><?php echo $this->translate('Skip to main content'); ?></a>
         <?php echo $userBar; ?>
@@ -58,16 +44,34 @@ $userBar = $this->userBar();
                     <?php endif; ?>
                     </a>
                 </h1>
-                <div id="search-container">
-                    <?php echo $this->partial('common/search-form'); ?>
-                    <button type="button" class="search-toggle" title="Toggle search"></button>
+
+                <?= $this->partial('common/search-form'); ?>
+
+                <a href="/admin" class="admin" target="_blank">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+                <div id="share">
+                    <i class="fas fa-qrcode"></i>
+                    <div>
+                        <h4>Partager cette page</h4>
+                        <div id="qrcode"></div>
+                        <span>Copier le lien <i class="fas fa-copy"></i></span>
+                    </div>
                 </div>
+
                 <?php echo $site->publicNav()->menu()->setPartial('common/accessible-mega-menu.phtml')->renderPartial(); ?>
 
-                <?php if ($banner): ?>
-                <div class="banner">
-                    <img src="<?php echo $this->themeSettingAssetUrl('banner'); ?>" title="Banner">
-                </div>
+                <?php
+                    $banner = $this->themeSettingAssetUrl('banner');
+                    $bannerText = $this->themeSetting('banner_text');
+                ?>
+                <?php if($banner): ?>
+                    <div class="banner">
+                        <img src="<?= $banner ?>" title="Banner">
+                        <?php if($bannerText): ?>
+                            <h2><?= $bannerText ?></h2>
+                        <?php endif; ?>
+                    </div>
                 <?php endif; ?>
             </header>
 
@@ -82,6 +86,8 @@ $userBar = $this->userBar();
                     <?php echo $this->translate('Powered by Omeka S'); ?>
                 <?php endif; ?>
             </footer>
+
+            <i id="btn-top" class="fas fa-chevron-up" title="Retour en haut"></i>
         </div>
         <script type="text/javascript">
         jQuery(document).ready(function () {

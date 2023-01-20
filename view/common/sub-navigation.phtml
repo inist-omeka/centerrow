@@ -1,10 +1,6 @@
 <?php
-
-$navDepthSetting = $this->themeSetting('nav_depth');
-
-?>
-
-<?php if ($navDepthSetting == 0 || $level <= $navDepthSetting):?>
+$navDepthSetting = 0;
+if ($navDepthSetting == 0 || $level <= $navDepthSetting):?>
     <ul>
         <?php foreach ($children as $child): ?>
             <?php $hasChildren = $child->hasPages() ?>
@@ -19,7 +15,6 @@ $navDepthSetting = $this->themeSetting('nav_depth');
             <?php if (!$hasChildren): ?>
                 <li class="<?php if ($child->isActive()) echo ' active' ?>">
                     <a
-
                         href="<?php echo $child->getHref() ?>"
                         <?php if ($child->getTarget() != ""): ?>
                             target="<?php echo $child->getTarget(); ?>"
