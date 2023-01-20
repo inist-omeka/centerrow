@@ -1,0 +1,95 @@
+:root{
+	--primary: #0873dd;
+	--max-width: 80%;
+}
+
+/* font  */
+html{
+	font-size: 16px;
+	font-family: "Lato","Calibri", "Arial", sans-serif;
+}
+
+/* page size */
+#wrap{
+	max-width: none;
+}
+#content{
+	max-width: var(--max-width);
+	margin: auto;
+}
+
+/* header */
+header h1{
+	width: auto;
+}
+/* barre de recherche */
+header #search{
+	display: flex;
+	align-items: center;
+}
+
+header #search button{
+	padding: 0;
+	background-color: transparent;
+	color: var(--primary);
+}
+/* menu */
+.sub-nav.first{
+	max-width: none;
+}
+
+/* qrcode */
+#share{
+	position: relative;
+}
+
+#share i{
+	color: var(--primary);
+	cursor: pointer;
+}
+
+#share > i{
+	position: relative;
+	top: -2px
+}
+
+#share > div{
+	position: absolute;
+	top: 2.5rem;
+	right: 0;
+	z-index: 2000;
+	display: none;
+	flex-direction: column;
+	padding: 1rem;
+	align-items: center;
+	background-color: white;
+	border: 1px solid var(--primary);
+}
+
+#share > div.show{
+	display: flex;
+}
+
+#share h4{
+	margin-top: 0;
+}
+
+#share span{
+	margin-top: 1rem;
+	color: var(--primary);
+	cursor: pointer
+}
+
+#share span i{
+	margin-left: .5rem;
+}
+
+/* bannière */
+.banner h2{
+	position: absolute;
+	width: 100%;
+	padding: 1rem 0;
+	background-color: rgba(0, 0, 0, .6);
+	text-align: center;
+	color: white;
+}

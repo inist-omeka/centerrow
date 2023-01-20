@@ -1,0 +1,83 @@
+/* resource */
+.property{
+	margin-bottom: 1rem;
+}
+
+.property h4{
+	width: 20%;
+	font-size: 1rem;
+	line-height: 1.5rem;
+	text-align: left;
+}
+
+.property .values{
+	width: 80%;
+}
+
+.properties .property .values .value{
+	margin: 0;
+	text-align: justify;
+}
+
+.property .values .value:not(:last-child){
+	padding-bottom: .5rem;
+	border: 0;
+}
+
+.property .value i{
+	margin-left: .5rem;
+}
+
+.property .value.resource img{
+	margin-right: 1rem;
+}
+
+/* bloc de champs */
+.properties.foldable h3{
+	cursor: pointer;
+}
+
+.properties.foldable h3::after{
+	content: "\f078";
+	margin-left: .5rem;
+	font-family: "Font Awesome 5 Free";
+}
+
+.properties.foldable.open h3::after{
+	content: "\f077";
+}
+
+.properties.foldable .property{
+	display: none;
+}
+
+.properties.foldable.open .property{
+	display: flex;
+}
+
+.properties.open{
+	border: none;
+}
+
+/* licences */
+.property [class^="license"]{
+	margin-right: 1rem;
+}
+
+.property .value .license-etalab{
+	width: 100px;
+	height: auto;
+}
+
+/* modules */
+
+/* next */
+.previous-next-items{
+	display: flex;
+	grid-column: 1/3;
+	justify-content: space-between;
+}
+
+.next-item:only-child{
+	margin-left: auto;
+}
