@@ -11,9 +11,11 @@ $this->headLink()->prependStylesheet($this->assetUrl('css/iconfonts.css', 'Omeka
 $this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
 $this->headLink()->appendStylesheet($this->assetUrl('css/custom.css'));
 $this->headLink()->appendStylesheet($this->assetUrl('css/resource.css'));
+$this->headLink()->appendStylesheet($this->assetUrl('jqcloud/jqcloud.css'));
 $this->headScript()->prependFile($this->assetUrl('js/centerrow.js'));
 $this->headScript()->prependFile($this->assetUrl('js/custom.js'));
 $this->headScript()->prependFile($this->assetUrl('js/qrcode.min.js'));
+$this->headScript()->prependFile($this->assetUrl('jqcloud/jqcloud-1.0.4.js'));
 $this->headScript()->prependFile($this->assetUrl('js/jquery-accessibleMegaMenu.js'));
 $this->headScript()->prependFile($this->assetUrl('js/global.js', 'Omeka'));
 $this->headScript()->prependFile($this->assetUrl('vendor/jquery/jquery.min.js', 'Omeka'));
@@ -35,15 +37,13 @@ $userBar = $this->userBar();
         <?php echo $userBar; ?>
         <div id="wrap">
             <header>
-                <h1>
-                    <a href="<?php echo $site->url(); ?>" class="site-title">
+                <a href="<?php echo $site->url(); ?>" class="site-title">
                     <?php if ($this->themeSetting('logo')): ?>
                         <img src="<?php echo $this->themeSettingAssetUrl('logo'); ?>" alt="<?php echo $escape($siteTitle); ?>" />
                     <?php else: ?>
                         <?php echo $escape($siteTitle); ?>
                     <?php endif; ?>
-                    </a>
-                </h1>
+                </a>
 
                 <?= $this->partial('common/search-form'); ?>
 
@@ -65,15 +65,15 @@ $userBar = $this->userBar();
                     $banner = $this->themeSettingAssetUrl('banner');
                     $bannerText = $this->themeSetting('banner_text');
                 ?>
-                <?php if($banner): ?>
-                    <div class="banner">
-                        <img src="<?= $banner ?>" title="Banner">
-                        <?php if($bannerText): ?>
-                            <h2><?= $bannerText ?></h2>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
             </header>
+            <?php if($banner): ?>
+                <div class="banner">
+                    <img src="<?= $banner ?>" title="Banner">
+                    <?php if($bannerText): ?>
+                        <h2><?= $bannerText ?></h2>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
 
             <div id="content" role="main">
                 <?php echo $this->content; ?>
