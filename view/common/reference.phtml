@@ -39,6 +39,9 @@ $api = $plugins->get('api');
 $escape = $plugins->get('escapeHtml');
 $translate = $plugins->get('translate');
 
+$searchConfig = $this->siteSetting("advancedsearch_main_config");
+$searchPage = $this->api()->read("search_configs", $searchConfig)->getContent()->path();
+
 // This is the Omeka default title. May be different in the database.
 $emptyTitle = $translate('[Untitled]');
 $siteSlug = $this->params()->fromRoute('site-slug')
@@ -119,7 +122,7 @@ if ($options['raw']) {
 } else {
     $replaceBase['{reference_url}'] = '';
     if ($options['total']) {
-        $template .= '<div class="reference-record"><a href="{reference_url}">{reference_text}</a>{reference_total}{recursive}</div>' . PHP_EOL;
+        $template .= '<div class="reference-record"><a href="{reference_url}" data-weight={reference_total}>{reference_text}</a>{reference_total}{recursive}</div>' . PHP_EOL;
         $replaceBase['{reference_total}'] = '';
     } else {
         $template .= '<div class="reference-record"><a href="{reference_url}">{reference_text}</a>{recursive}</div>' . PHP_EOL;
@@ -151,7 +154,7 @@ if ($options['raw']) {
         // $templateUrl = str_replace('__temp_placeholder__', '{reference}',
             // $url('site/resource', ['site-slug' => $siteSlug, 'controller' => $controllerName], false) . '?' . http_build_query($query, '', '&amp;', PHP_QUERY_RFC3986));
         // template pour redirection facette Solr
-        $templateUrl = $url('site', ['site-slug' => $siteSlug]).'/search?facet['.str_replace(":", "_", $field["o:term"]).'_ss][0]={reference}';
+        $templateUrl = $url('site', ['site-slug' => $siteSlug]).'/'.$searchPage.'?facet['.str_replace(":", "_", $field["o:term"]).'_ss][0]={reference}';
     }
 }
 
