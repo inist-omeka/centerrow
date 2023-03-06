@@ -45,6 +45,7 @@ $options = $searchPage->setting('facet', []);
 <aside class="search-facets">
 
     <h3><?= $translate('Facets') ?></h3>
+    <a href="?q="><?= $translate("Reset") ?></a>
 
     <?php if ($displayActive && count($activeFacets)): ?>
     <h4><?= $translate('Active facets') ?></h4>
