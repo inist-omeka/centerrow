@@ -91,6 +91,17 @@ if($nakalaProperties == null)
         <?php echo $subjectValues; ?>
     </div>
     <?php endif; ?>
+
+    <?php if ($hasNext): ?>
+        <div class="previous-next-items">
+            <?php if ($previous = $this->previousResource($resource)): ?>
+                <?= $previous->link("Contenu précédent", null, ['class' => 'previous-item']) ?>
+            <?php endif; ?>
+            <?php if ($next = $this->nextResource($resource)): ?>
+                <?= $next->link("Contenu suivant", null, ['class' => 'next-item']) ?>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 </div>
 
 <div class="secondary-block">
