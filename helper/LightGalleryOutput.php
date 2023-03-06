@@ -16,7 +16,7 @@ class LightGalleryOutput extends AbstractHelper
         $view->headLink()->prependStylesheet($view->assetUrl('css/lightgallery.min.css'));
         $escape = $view->plugin('escapeHtml');
 
-        $html = '<ul id="itemfiles" class="media-list">';
+        $html = '</div><ul id="itemfiles" class="media-list">';
         $mediaCaption = $view->themeSetting('media_caption');
 
         foreach ($files as $file) {
