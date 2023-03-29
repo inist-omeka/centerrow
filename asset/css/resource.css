@@ -1,37 +1,4 @@
 /* resource */
-.property{
-	margin-bottom: 1rem;
-}
-
-.property h4{
-	width: 20%;
-	font-size: 1rem;
-	line-height: 1.5rem;
-	text-align: left;
-}
-
-.property .values{
-	width: 80%;
-}
-
-.properties .property .values .value{
-	margin: 0;
-	text-align: justify;
-}
-
-.property .values .value:not(:last-child){
-	padding-bottom: .5rem;
-	border: 0;
-}
-
-.property .value i{
-	margin-left: .5rem;
-}
-
-.property .value.resource img{
-	margin-right: 1rem;
-}
-
 /* bloc de champs */
 .properties.foldable h3{
 	cursor: pointer;
@@ -59,6 +26,48 @@
 	border: none;
 }
 
+/* propriété */
+.property{
+	margin-bottom: 1rem;
+}
+
+.property:last-child{
+	margin: 0;
+}
+
+.properties .property h4{
+	width: 20%;
+	padding: 0;
+	font-size: 1rem;
+	line-height: 1.5rem;
+	text-align: left;
+}
+
+.property .values{
+	width: 80%;
+	padding: 0;
+}
+
+.properties .property .values .value{
+	margin: 0;
+}
+
+.property .values .value:not(:last-child){
+	border: 0;
+}
+
+.property .values.inline .value{
+	padding: 0;
+}
+
+.property .value i{
+	margin-left: .5rem;
+}
+
+.property .value.resource img{
+	margin-right: 1rem;
+}
+
 /* licences */
 .property [class^="license"]{
 	margin-right: 1rem;
@@ -69,15 +78,129 @@
 	height: auto;
 }
 
-/* modules */
+/* citation */
+#item-citation .value i{
+	cursor: pointer;
+}
 
+/* item */
+.item.show #content{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 2rem;
+}
+
+.item.show .main-block, .item.show .secondary-block{
+	display: flex;
+	flex-direction: column;
+	gap: 1rem 0;
+}
+
+.item.show .main-block, .item.show .secondary-block > *{
+	padding: 1rem;
+	background-color: white;
+	box-shadow: 0 .25rem .5rem 0 rgb(0 0 0 / 20%);
+}
+
+.item.show .main-block > h2{
+	margin: 0;
+	text-align: center;
+}
+
+#itemfiles{
+	margin: 0;
+}
+
+#iframes .values{
+	width: 100%;
+}
+
+#iframes iframe{
+	width: 100%;
+}
+
+#itemSets .property{
+	align-items: center;
+}
+
+/* modules */
 /* next */
 .previous-next-items{
 	display: flex;
-	grid-column: 1/3;
 	justify-content: space-between;
 }
 
 .next-item:only-child{
 	margin-left: auto;
+}
+
+/* solr */
+.search-results-wrapper{
+	gap: 1rem;
+}
+
+#advanced-search-form #form-search{
+	width: 50%;
+	margin: 0 auto;
+}
+
+#advanced-search-form .field-meta{
+	display: none;
+}
+
+#advanced-search-form .inputs{
+	width: 100%;
+}
+
+#form-facets input[type="submit"]{
+	margin: 0;
+}
+
+.search-facet{
+	margin-bottom: 1.5rem;
+}
+
+.search-facet h4{
+	margin: 0;
+	margin-bottom: .25rem;
+	padding-bottom: .25rem;
+	border-bottom: 1px solid var(--primary);
+}
+
+.search-facet-items{
+	max-height: 240px;
+	overflow-y: auto;
+}
+
+.filter-value::after{
+	margin-left: 1rem;
+}
+
+.resource-list.list .resource{
+	gap: 1rem;
+}
+
+.resource-list.list .resource .resource-metadata{
+	flex: 1;
+}
+
+.resource-list.list .resource .resource-thumbnail{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-basis: 200px;
+}
+
+/* value suggest */
+.property .values .valuesuggest{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.property .values .valuesuggest a:nth-child(2){
+	display: flex;
+	align-items: center;
+	gap: 0 .25rem;
+	font-size: .75rem;
 }

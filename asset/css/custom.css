@@ -1,6 +1,6 @@
 :root{
-	--primary: #0873dd;
-	--max-width: 80%;
+	--primary: #c72e2e;
+	--max-width: 90%;
 }
 
 /* font  */
@@ -12,20 +12,55 @@ html{
 /* page size */
 #wrap{
 	max-width: none;
+	padding: 0;
+	background-color: #f0f0f0;
 }
+
 #content{
 	max-width: var(--max-width);
-	margin: auto;
+	margin: 2rem auto;
 }
 
 /* header */
-header h1{
-	width: auto;
+header{
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	padding: 0 1rem;
+	align-items: center;
+	background-color: white;
 }
+
+header .site-title{
+	margin: 1rem 0;
+}
+
+header nav{
+	position: relative;
+	z-index: 2000;
+	flex-basis: 100%;
+}
+
+header nav .navigation{
+	margin: .5rem 0;
+	justify-content: center;
+	border: 0;
+}
+
+header nav .navigation a{
+	font-size: 1.25rem;
+}
+
+header .fas{
+	font-size: 1.5rem;
+	color: var(--primary);
+}
+
 /* barre de recherche */
 header #search{
 	display: flex;
 	align-items: center;
+	margin-left: auto;
 }
 
 header #search button{
@@ -33,14 +68,17 @@ header #search button{
 	background-color: transparent;
 	color: var(--primary);
 }
+
 /* menu */
 .sub-nav.first{
+	z-index: 2000;
 	max-width: none;
 }
 
 /* qrcode */
 #share{
 	position: relative;
+	margin-left: .5rem;
 }
 
 #share i{
@@ -48,16 +86,11 @@ header #search button{
 	cursor: pointer;
 }
 
-#share > i{
-	position: relative;
-	top: -2px
-}
-
 #share > div{
 	position: absolute;
 	top: 2.5rem;
 	right: 0;
-	z-index: 2000;
+	z-index: 2001;
 	display: none;
 	flex-direction: column;
 	padding: 1rem;
@@ -92,4 +125,16 @@ header #search button{
 	background-color: rgba(0, 0, 0, .6);
 	text-align: center;
 	color: white;
+}
+
+/* retour haut de page */
+#btn-top{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	display: none;
+	margin: 1rem;
+	font-size: 2rem;
+	color: var(--primary);
+	cursor: pointer;
 }
