@@ -23,8 +23,11 @@ if($sortValues == null)
 ?>
 
 <?php foreach ($values as $term => $propertyData): ?>
-    <?php $id = str_replace(":", "-", $term); ?>
-    <div class="property" id="<?php echo $id; ?>">
+    <?php
+        $propertyClass = ["property"];
+        $propertyClass[] = str_replace(":", "-", $term);
+    ?>
+    <div class="<?= implode(" ", $propertyClass) ?>">
         <h4><?php
             if ($propertyData['alternate_label']):
                 echo $escape($propertyData['alternate_label']);
@@ -45,6 +48,7 @@ if($sortValues == null)
             <?php foreach ($propertyData['values'] as $value): ?>
                 <?php
                 $valueType = $value->type();
+                $facet = str_replace(":", "_", $term)."_ss";
                 $class = ['value'];
                 if ('resource' == $valueType || strpos($valueType, 'resource') !== false) {
                     $class[] = 'resource';
@@ -55,6 +59,8 @@ if($sortValues == null)
                 if (!$value->isPublic()) {
                     $class[] = 'private';
                 }
+                if(strpos($valueType, "valuesuggest") !== false)
+                    $class[] = "valuesuggest"
                 ?>
                 <div class="<?php echo implode(' ', $class); ?>" lang="<?php echo $escape($value->lang()); ?>"><?php
                     if ($language = $value->lang()):
@@ -62,13 +68,25 @@ if($sortValues == null)
                     endif;
                     if($valueType == "literal"){
                         if(in_array($term, $rebonds)){
-                            $facet = str_replace(":", "_", $term)."_ss";
                             ?><a href="<?= $url('site', ['site-slug' => $siteSlug]); ?>/<?= $searchPage ?>?facet[<?= $facet ?>][]=<?= urlencode($value) ?>"><?= $value ?></a><?php
                         }
                         else
                             echo $value;
                     }else if(strpos($valueType, 'resource') !== false)
                         echo str_replace("square", "medium", $value->asHtml());
+                    else if(strpos($valueType, "valuesuggest") !== false){
+                        if(in_array($term, $rebonds)){
+                            ?><a href="<?= $url('site', ['site-slug' => $siteSlug]); ?>/<?= $searchPage ?>?facet[<?= $facet ?>][]=<?= $value ?>"><?= $value ?></a><?php
+                        }
+                        else
+                            echo $value->asHtml();
+                        if(strpos($valueType, "valuesuggest:idref") !== false){
+                            ?><a href="<?= $value->uri() ?>" target="_blank" class="idref">voir dans IdRef <img src="<?= $this->assetUrl("img/idref.png") ?>"><i class="fas fa-external-link-alt"></i></a><?php
+                        }
+                        if(strpos($valueType, "valuesuggest:pactols") !== false){
+                            ?><a href="<?= $value->uri() ?>" target="_blank" class="frantiq">voir dans le thésaurus PACTOLS<i class="fas fa-external-link-alt"></i></a><?php
+                        }
+                    }
                     else if($valueType == "uri"){
                         if($term == "dcterms:license"){
                             foreach($licenses as $license){

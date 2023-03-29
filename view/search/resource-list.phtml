@@ -35,7 +35,7 @@ $gridListMode = $searchPage ? $searchPage->subSetting('display', 'grid_list_mode
 $defaultThumbnail = '<img src="' . $assetUrl('thumbnails/default.png', 'Omeka', true) . '" title="' . $translate('No media') . '"/>';
 
 $properties = $this->themeSetting("browse_body_properties");
-if( $properties == null)
+if($properties == null)
     $properties = [];
 ?>
 

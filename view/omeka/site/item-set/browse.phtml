@@ -38,12 +38,12 @@ foreach ($itemSets as $itemSet):
 ?>
     <li class="item-set resource">
         <?php if ($thumbnail = $this->thumbnail($itemSet, 'medium')): ?>
-        <?php echo $itemSet->linkRaw($thumbnail, null, ['class' => 'thumbnail']); ?>
+            <?php echo $itemSet->linkRaw($thumbnail, null, ['class' => 'thumbnail']); ?>
         <?php endif; ?>
         <div class="resource-meta">
             <h4><?php echo $itemSet->link($heading); ?></h4>
             <?php if ($body): ?>
-            <div class="description"><?php echo $escape($body); ?></div>
+                <div class="description"><?= $body ?></div>
             <?php endif; ?>
         </div>
     </li>
