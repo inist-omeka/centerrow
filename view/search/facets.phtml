@@ -74,8 +74,11 @@ $options = $searchPage->setting('facet', []);
         <p><?= $translate('No facets.') ?></p>
         <?php else: ?>
         <ul class="search-facets-list">
-            <?php foreach ($facets as $name => $facetValues): ?>
-            <?php $facetType = empty($options['facets'][$name]['type']) ? 'Checkbox' : $options['facets'][$name]['type']; ?>
+            <?php foreach ($facets as $name => $facetValues):
+                $facetType = empty($options['facets'][$name]['type']) ? 'Checkbox' : $options['facets'][$name]['type'];
+                if($options["order"] == "alphabetic asc")
+                    $facetValues = $this->SortFacetsAlphabetic($facetValues);
+            ?>
             <li class="search-facet">
                 <h4><?= $translate($facetLabel($name)) ?></h4>
                 <?php if ($facetType === 'Select'): ?>
