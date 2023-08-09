@@ -117,14 +117,126 @@ header #search button{
 	margin-left: .5rem;
 }
 
+/* carousel */
+.carousel{
+    position: relative;
+    display: flex;
+	height: max-content;
+    justify-content: flex-start;
+    overflow-x: hidden;
+}
+
+.carousel-inner{
+    height: 100%;
+    display: flex;
+    transition: all ease 1.5s;
+}
+
+.carousel-item{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .carousel-indicators, .carousel-controls{
+	display: none;
+} */
+
+.carousel-controls .prev{
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url('../../asset/img/icons/prev.svg');
+    background-position: center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    opacity: .5;
+}
+
+.carousel-controls .next{
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url('../../asset/img/icons/next.svg');
+    background-position: center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    opacity: .5;
+}
+
+.prev:hover, .next:hover{
+    opacity: 1;
+}
+
+.carousel-indicators{
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.carousel-indicators span{
+    display: inline-block;
+    background-color: white;
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    opacity: .5;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.carousel-indicators span.active{
+    opacity: 1;
+}
+
+.carousel img{
+	max-width: 100%;
+}
+
 /* bannière */
-.banner h2{
+.banner{
+	z-index: 1;
+    width: 100%;
+	height: 300px;
+	align-items: center;
+}
+
+.banner .banner-text{
 	position: absolute;
-	width: 100%;
-	padding: 1rem 0;
-	background-color: rgba(0, 0, 0, .6);
+	left: 50%;
+	transform: translate(-50%);
+	width: max-content;
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 1rem 2rem;
+	/* background-color: rgba(0, 0, 0, .6); */
 	text-align: center;
+}
+
+.banner .banner-text > *{
+	margin: 0;
+	font-size: 2.5rem;
+	line-height: normal;
 	color: white;
+}
+
+/* content */
+#content img{
+	max-width: 100%;
 }
 
 /* retour haut de page */

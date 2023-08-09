@@ -1,0 +1,39 @@
+<?php
+	$path =  $_SERVER["REQUEST_URI"];
+	$parts = explode('/', $path);
+?>
+<?php if(isset($parts[4]) && $parts[4] == "home"): ?>
+	<?php
+		$banners = [];
+		for($i = 0; $i < 5; $i++)
+			if($img = $this->themeSettingAssetUrl('banner_'.$i))
+				$banners[] = $img;
+		$bannerText = $this->themeSetting('banner_text');
+	?>
+	<?php if(count($banners) > 1): ?> 
+		<div class="banner carousel">
+			<div class="carousel-inner">
+				<?php foreach($banners as $banner): ?>
+					<div class="carousel-item">
+						<img src="<?= $banner ?>">
+					</div>
+				<?php endforeach ?>
+			</div>
+			<div class="carousel-controls">
+				<span class="prev"></span>
+				<span class="next"></span>
+			</div>
+			<div class="carousel-indicators"></div>
+			<?php if($bannerText): ?>
+				<div class="banner-text"><?= $bannerText ?></div>
+			<?php endif ?>
+		</div>
+	<?php elseif(count($banners) == 1): ?>
+		<div class="banner">
+			<img src="<?= $banners[0] ?>">
+			<?php if($bannerText): ?>
+				<div class="banner-text"><?= $bannerText ?></div>
+			<?php endif ?>
+		</div>
+	<?php endif; ?>
+<?php endif; ?>

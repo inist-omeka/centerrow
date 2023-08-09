@@ -11,11 +11,9 @@ $this->headLink()->prependStylesheet($this->assetUrl('css/iconfonts.css', 'Omeka
 $this->headLink()->appendStylesheet($this->assetUrl('css/style.css'));
 $this->headLink()->appendStylesheet($this->assetUrl('css/custom.css'));
 $this->headLink()->appendStylesheet($this->assetUrl('css/resource.css'));
-$this->headLink()->appendStylesheet($this->assetUrl('jqcloud/jqcloud.css'));
 $this->headScript()->prependFile($this->assetUrl('js/centerrow.js'));
 $this->headScript()->prependFile($this->assetUrl('js/custom.js'));
 $this->headScript()->prependFile($this->assetUrl('js/qrcode.min.js'));
-$this->headScript()->prependFile($this->assetUrl('jqcloud/jqcloud-1.0.4.js'));
 $this->headScript()->prependFile($this->assetUrl('js/jquery-accessibleMegaMenu.js'));
 $this->headScript()->prependFile($this->assetUrl('js/global.js', 'Omeka'));
 $this->headScript()->prependFile($this->assetUrl('vendor/jquery/jquery.min.js', 'Omeka'));
@@ -61,20 +59,9 @@ $userBar = $this->userBar();
                 </div>
 
                 <?php echo $site->publicNav()->menu()->setPartial('common/accessible-mega-menu.phtml')->renderPartial(); ?>
-
-                <?php
-                    $banner = $this->themeSettingAssetUrl('banner');
-                    $bannerText = $this->themeSetting('banner_text');
-                ?>
             </header>
-            <?php if($banner): ?>
-                <div class="banner">
-                    <img src="<?= $banner ?>" title="Banner">
-                    <?php if($bannerText): ?>
-                        <h2><?= $bannerText ?></h2>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
+
+            <?= $this->partial('common/banner'); ?>
 
             <div id="content" role="main">
                 <?php echo $this->content; ?>
