@@ -57,9 +57,6 @@ $options = $searchPage->setting('facet', []);
     <?php endif; ?>
 
     <form id="form-facets">
-		<?php foreach ($activeFacets as $name => $facetValues) foreach ($facetValues as $facetKey => $facetValue): ?>
-			<input type="hidden" id="<?= $name."[]".$facetValue ?>" name="facet[<?= $name ?>][]" value="<?= $facetValue ?>">
-        <?php endforeach; ?>
         <?php if ($displayFacetButton): ?>
         <?= $this->hiddenInputsFromFilteredQuery(null, ['facet', 'page', 'limit', 'offset', 'per_page']) ?>
         <?php endif; ?>

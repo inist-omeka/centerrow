@@ -82,19 +82,12 @@ $this->headScript()->appendFile($assetUrl('js/search.js', 'AdvancedSearch'), 'te
     $this->htmlElement('body')->appendAttribute('class', 'search-page item-set resource browse');
     ?>
     <?= $this->pageTitle($itemSet->displayTitle(), 2) ?>
-    <h3><?= $translate('Item set') ?></h3>
     <div class="metadata">
         <?= $itemSet->displayValues() ?>
     </div>
-    <div class="item-set-items">
-        <h3><?= $translate('Items') ?></h3>
-    </div>
-
 <?php else: ?>
-
     <?php $this->htmlElement('body')->appendAttribute('class', 'search-page resource browse'); ?>
     <?= $this->pageTitle($translate('Search'), 2) ?>
-
 <?php endif; ?>
 
 <?= $this->searchForm($searchPage, null, $skipFormAction) ?>

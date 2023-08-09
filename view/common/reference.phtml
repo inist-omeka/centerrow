@@ -122,7 +122,7 @@ if ($options['raw']) {
 } else {
     $replaceBase['{reference_url}'] = '';
     if ($options['total']) {
-        $template .= '<div class="reference-record"><a href="{reference_url}" data-weight={reference_total}>{reference_text}</a>{reference_total}{recursive}</div>' . PHP_EOL;
+        $template .= '<div class="reference-record"><a href="{reference_url}" data-weight={reference_weight}>{reference_text}</a> {reference_total}{recursive}</div>' . PHP_EOL;
         $replaceBase['{reference_total}'] = '';
     } else {
         $template .= '<div class="reference-record"><a href="{reference_url}">{reference_text}</a>{recursive}</div>' . PHP_EOL;
@@ -154,7 +154,8 @@ if ($options['raw']) {
         // $templateUrl = str_replace('__temp_placeholder__', '{reference}',
             // $url('site/resource', ['site-slug' => $siteSlug, 'controller' => $controllerName], false) . '?' . http_build_query($query, '', '&amp;', PHP_QUERY_RFC3986));
         // template pour redirection facette Solr
-        $templateUrl = $url('site', ['site-slug' => $siteSlug]).'/'.$searchPage.'?facet['.str_replace(":", "_", $field["o:term"]).'_ss][0]={reference}';
+        // $templateUrl = $url('site', ['site-slug' => $siteSlug]).'/'.$searchPage.'?facet['.str_replace(":", "_", $field["o:term"]).'_ss][0]={reference}';
+        $templateUrl = $url('site', ['site-slug' => $siteSlug]).'/'.$searchPage.'?'.str_replace(":", "_", $field["o:term"]).'_ss={reference}';
     }
 }
 
@@ -273,6 +274,9 @@ if ($options['skiplinks']):
             $referenceTotal = ' (' . $referenceData['total'] . ')';
             $replace['{reference_total}'] = $referenceTotal;
         }
+        if($referenceData['total'] == 1)
+            $replace['{reference_total}'] = "(1)";
+        $replace['{reference_weight}'] = $referenceData['total'];
 
         $recursive = '';
         // TODO To be improved to avoid to read from the api (resources by reference or linked resources).
