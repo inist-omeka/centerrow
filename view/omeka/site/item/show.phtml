@@ -22,24 +22,24 @@ $args = $eventManager->prepareArgs(["values" => $values]);
 $eventManager->trigger("rep.resource.display_values", $item, $args);
 $values = $args["values"];
 
-$propertiesBlock = $this->themeSetting("properties_block_items");
-$propertiesBlock = json_decode($propertiesBlock);
-if($propertiesBlock == null)
-    $propertiesBlock = [];
+$propertiesGroup = $this->themeSetting("properties_group_items");
+$propertiesGroup = json_decode($propertiesGroup);
+if($propertiesGroup == null)
+    $propertiesGroup = [];
 
-foreach($propertiesBlock as $block){
-    $block->values = ["values" => []];
-    foreach($block->terms as $term){
+$withGroup = [];
+foreach($propertiesGroup as $group){
+    $group->values = ["values" => []];
+    foreach($group->terms as $term){
         if(isset($values[$term])){
-            $block->values["values"][$term] = $values[$term];
-            unset($values[$term]);
+            $group->values["values"][$term] = $values[$term];
+            $withGroup[] = $term;
         }
     }
 }
-
-$nakalaProperties = $this->themeSetting("nakala_properties");
-if($nakalaProperties == null)
-    $nakalaProperties = [];
+foreach($withGroup as $term){
+    unset($values[$term]);
+}
 
 $mediaCaption = $this->themeSetting('media_caption');
 if($mediaCaption == null)
@@ -65,23 +65,9 @@ if($mediaCaption == null)
         <?= $this->partial("common/resource-values", ["values" => $values]) ?>
     </div>
 
-    <?php foreach($propertiesBlock as $block): ?>
-        <?php if($block->position == "main" && count($block->terms) > 0): ?>
-            <?php
-                $class = ["properties"];
-                if($block->foldable){
-                    $class[] = "foldable";
-                    if($block->open)
-                        $class[] = "open";
-                }
-                $class[] = $block->class;
-            ?>
-            <div class="<?= implode(" ", $class) ?>">
-                <?php if($block->title): ?>
-                    <h3><?= $block->title ?></h3>
-                <?php endif; ?>
-                <?= $this->partial("common/resource-values", $block->values) ?>
-            </div>
+    <?php foreach($propertiesGroup as $group): ?>
+        <?php if($group->position == "main" && count($group->terms) > 0): ?>
+            <?= $this->partial("common/properties-group", ["group" => $group]) ?>
         <?php endif; ?>
     <?php endforeach; ?>
 
@@ -129,23 +115,9 @@ if($mediaCaption == null)
         </div>
     <?php endif; ?>
 
-    <?php foreach($propertiesBlock as $block): ?>
-        <?php if($block->position == "secondary-start" && count($block->terms) > 0): ?>
-            <?php
-                $class = ["properties"];
-                if($block->foldable){
-                    $class[] = "foldable";
-                    if($block->open)
-                        $class[] = "open";
-                }
-                $class[] = $block->class;
-            ?>
-            <div class="<?= implode(" ", $class) ?>">
-                <?php if($block->title): ?>
-                    <h3><?= $block->title ?></h3>
-                <?php endif; ?>
-                <?= $this->partial("common/resource-values", $block->values) ?>
-            </div>
+    <?php foreach($propertiesGroup as $group): ?>
+        <?php if($group->position == "secondary-start" && count($group->terms) > 0): ?>
+            <?= $this->partial("common/properties-group", ["group" => $group]) ?>
         <?php endif; ?>
     <?php endforeach; ?>
 
@@ -191,50 +163,18 @@ if($mediaCaption == null)
         </div>
     <?php endif; ?>
 
-    <?php if (count($nakalaProperties) > 0): ?>
-        <div id="iframes" class="property">
-            <div class="values">
-                <?php foreach($nakalaProperties as $term):
-                    $valuesNakala = $item->value($term, ["all" => true]);
-                ?>
-                    <?php if(count($values) > 0): ?>
-                        <?php foreach($valuesNakala as $value):
-                            $src = $value;
-                            if($value->type() == "uri")
-                                $src = $value->uri();
-                        ?>
-                            <div class="value">
-                                <iframe src="<?= $src ?>" allow="fullscreen"></iframe>
-                                <?php if(strpos($src, "https://api.nakala.fr/") !== false): ?>
-                                    <?= $this->citationNakala($src) ?>
-                                <?php endif; ?>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    <?php endif; ?>
+    <div class="mapping">
+        <?= $this->partial('mapping/index/show'); ?>
+        <?php foreach($propertiesGroup as $group): ?>
+            <?php if($group->position == "mapping" && count($group->terms) > 0): ?>
+                <?= $this->partial("common/properties-group", ["group" => $group]) ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
 
-    <?= $this->partial('mapping/index/show'); ?>
-
-    <?php foreach($propertiesBlock as $block): ?>
-        <?php if($block->position == "secondary-end" && count($block->terms) > 0): ?>
-            <?php
-                $class = ["properties"];
-                if($block->foldable){
-                    $class[] = "foldable";
-                    if($block->open)
-                        $class[] = "open";
-                }
-                $class[] = $block->class;
-            ?>
-            <div class="<?= implode(" ", $class) ?>">
-                <?php if($block->title): ?>
-                    <h3><?= $block->title ?></h3>
-                <?php endif; ?>
-                <?= $this->partial("common/resource-values", $block->values) ?>
-            </div>
+    <?php foreach($propertiesGroup as $group): ?>
+        <?php if($group->position == "secondary-end" && count($group->terms) > 0): ?>
+            <?= $this->partial("common/properties-group", ["group" => $group]) ?>
         <?php endif; ?>
     <?php endforeach; ?>
 

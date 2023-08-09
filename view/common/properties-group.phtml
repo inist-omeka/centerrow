@@ -1,0 +1,15 @@
+<?php
+	$class = ["properties"];
+	if($group->foldable){
+		$class[] = "foldable";
+		if($group->open)
+			$class[] = "open";
+	}
+	$class[] = $group->class;
+?>
+<div class="<?= implode(" ", $class) ?>">
+	<?php if($group->title): ?>
+		<h3><?= $group->title ?></h3>
+	<?php endif; ?>
+	<?= $this->partial("common/resource-values", $group->values) ?>
+</div>

@@ -1,4 +1,29 @@
 /* resource */
+/* item */
+.item.show #content{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 2rem;
+}
+
+.item.show .main-block, .item.show .secondary-block{
+	display: flex;
+	flex-direction: column;
+	height: max-content;
+	gap: 1rem 0;
+}
+
+.item.show .main-block, .item.show .secondary-block > *{
+	padding: 1rem;
+	background-color: white;
+	box-shadow: 0 .25rem .5rem 0 rgb(0 0 0 / 20%);
+}
+
+.item.show .main-block > h2{
+	margin: 0;
+	text-align: center;
+}
+
 /* bloc de champs */
 .properties.foldable h3{
 	cursor: pointer;
@@ -29,6 +54,14 @@
 /* propriété */
 .property{
 	margin-bottom: 1rem;
+}
+
+.secondary-block .properties .property{
+	flex-direction: column;
+}
+
+.secondary-block .properties .property h4, .secondary-block .properties .property .values{
+	width: 100%;
 }
 
 .property:last-child{
@@ -83,30 +116,12 @@
 	cursor: pointer;
 }
 
-/* item */
-.item.show #content{
-	display: grid;
-	grid-template-columns: 2fr 1fr;
-	gap: 2rem;
+/* item - itemSets */
+#itemSets .property{
+	align-items: center;
 }
 
-.item.show .main-block, .item.show .secondary-block{
-	display: flex;
-	flex-direction: column;
-	gap: 1rem 0;
-}
-
-.item.show .main-block, .item.show .secondary-block > *{
-	padding: 1rem;
-	background-color: white;
-	box-shadow: 0 .25rem .5rem 0 rgb(0 0 0 / 20%);
-}
-
-.item.show .main-block > h2{
-	margin: 0;
-	text-align: center;
-}
-
+/* item - medias */
 #itemfiles{
 	margin: 0;
 }
@@ -117,10 +132,6 @@
 
 #iframes iframe{
 	width: 100%;
-}
-
-#itemSets .property{
-	align-items: center;
 }
 
 /* modules */
