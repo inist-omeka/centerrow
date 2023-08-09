@@ -1,0 +1,8 @@
+.page #content > h2{
+	text-align: center;
+}
+
+.page #content .text{
+	max-width: 60%;
+	margin: 0 auto;
+}
