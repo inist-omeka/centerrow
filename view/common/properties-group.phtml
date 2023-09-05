@@ -9,7 +9,16 @@
 ?>
 <div class="<?= implode(" ", $class) ?>">
 	<?php if($group->title): ?>
-		<h3><?= $group->title ?></h3>
+		<h3>
+			<?php if(isset($group->icon)): ?>
+				<?php if(str_starts_with($group->icon, "fa-") !== false ): ?>
+					<i class="fas <?= $group->icon ?>"></i>
+				<?php else: ?>
+					<img src="<?= $group->icon ?>">
+				<?php endif ?>
+			<?php endif ?>
+			<?= $group->title ?>
+		</h3>
 	<?php endif; ?>
 	<?= $this->partial("common/resource-values", $group->values) ?>
 </div>

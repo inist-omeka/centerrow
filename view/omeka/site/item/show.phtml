@@ -66,7 +66,7 @@ if($mediaCaption == null)
     </div>
 
     <?php foreach($propertiesGroup as $group): ?>
-        <?php if($group->position == "main" && count($group->terms) > 0): ?>
+        <?php if($group->position == "main" && count($group->values["values"]) > 0): ?>
             <?= $this->partial("common/properties-group", ["group" => $group]) ?>
         <?php endif; ?>
     <?php endforeach; ?>
@@ -116,7 +116,7 @@ if($mediaCaption == null)
     <?php endif; ?>
 
     <?php foreach($propertiesGroup as $group): ?>
-        <?php if($group->position == "secondary-start" && count($group->terms) > 0): ?>
+        <?php if($group->position == "secondary-start" && count($group->values["values"]) > 0): ?>
             <?= $this->partial("common/properties-group", ["group" => $group]) ?>
         <?php endif; ?>
     <?php endforeach; ?>
@@ -166,14 +166,14 @@ if($mediaCaption == null)
     <div class="mapping">
         <?= $this->partial('mapping/index/show'); ?>
         <?php foreach($propertiesGroup as $group): ?>
-            <?php if($group->position == "mapping" && count($group->terms) > 0): ?>
+            <?php if($group->position == "mapping" && count($group->values["values"]) > 0): ?>
                 <?= $this->partial("common/properties-group", ["group" => $group]) ?>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
 
     <?php foreach($propertiesGroup as $group): ?>
-        <?php if($group->position == "secondary-end" && count($group->terms) > 0): ?>
+        <?php if($group->position == "secondary-end" && count($group->values["values"]) > 0): ?>
             <?= $this->partial("common/properties-group", ["group" => $group]) ?>
         <?php endif; ?>
     <?php endforeach; ?>
