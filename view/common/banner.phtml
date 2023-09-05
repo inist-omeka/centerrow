@@ -5,7 +5,7 @@
 <?php if(isset($parts[4]) && $parts[4] == "home"): ?>
 	<?php
 		$banners = [];
-		for($i = 0; $i < 5; $i++)
+		for($i = 1; $i <= 5; $i++)
 			if($img = $this->themeSettingAssetUrl('banner_'.$i))
 				$banners[] = $img;
 		$bannerText = $this->themeSetting('banner_text');

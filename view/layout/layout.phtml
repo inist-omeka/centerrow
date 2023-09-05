@@ -43,7 +43,6 @@ $userBar = $this->userBar();
                         <?php echo $escape($siteTitle); ?>
                     <?php endif; ?>
                 </a>
-
                 <?= $this->partial('common/search-form'); ?>
 
                 <a href="/admin" class="admin" target="_blank">
@@ -62,7 +61,6 @@ $userBar = $this->userBar();
             </header>
 
             <?= $this->partial('common/banner'); ?>
-
             <div id="content" role="main">
                 <?php echo $this->content; ?>
             </div>
