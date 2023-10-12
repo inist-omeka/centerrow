@@ -43,17 +43,19 @@ $userBar = $this->userBar();
                         <?php echo $escape($siteTitle); ?>
                     <?php endif; ?>
                 </a>
-                <?= $this->partial('common/search-form'); ?>
 
-                <a href="/admin" class="admin" target="_blank">
-                    <i class="fas fa-user-circle"></i>
-                </a>
-                <div id="share">
-                    <i class="fas fa-qrcode"></i>
-                    <div>
-                        <h4>Partager cette page</h4>
-                        <div id="qrcode"></div>
-                        <span>Copier le lien <i class="fas fa-copy"></i></span>
+                <div>
+                    <?= $this->partial('common/search-form'); ?>
+                    <a href="/admin" class="admin" target="_blank">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <div id="share">
+                        <i class="fas fa-qrcode"></i>
+                        <div>
+                            <h4>Partager cette page</h4>
+                            <div id="qrcode"></div>
+                            <span onclick="copyUrl()">Copier le lien <i class="fas fa-copy"></i></span>
+                        </div>
                     </div>
                 </div>
 

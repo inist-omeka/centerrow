@@ -23,9 +23,6 @@ $(document).ready(() => {
 	$("#share").click(function(){
 		$("#share > div").toggleClass("show");
 	});
-	$("#share span").click(function(){
-		copy(document.location);
-	});
 
 	// item show block
 	$(".properties.foldable h3").click(function(){
@@ -176,3 +173,11 @@ $(document).ready(() => {
 		}
 	}
 })
+
+const copyUrl = async () => {
+	try{
+		await navigator.clipboard.writeText(document.location);
+	}catch (err){
+		console.error('Failed to copy: ', err);
+	}
+}
