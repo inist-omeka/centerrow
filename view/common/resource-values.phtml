@@ -20,12 +20,18 @@ $licenses = ["by-nc-sa", "by-nc-nd", "by-nd", "by-sa", "by-nc", "by", "licence-o
 $sortValues = $this->themeSetting("sort_values");
 if($sortValues == null)
     $sortValues = [];
+
+$inlineValues = $this->themeSetting("inline_values");
+if($inlineValues == null)
+    $inlineValues = [];
 ?>
 
 <?php foreach ($values as $term => $propertyData): ?>
     <?php
         $propertyClass = ["property"];
         $propertyClass[] = str_replace(":", "-", $term);
+        if(in_array($term, $inlineValues))
+            $propertyClass[] = "inline";
     ?>
     <div class="<?= implode(" ", $propertyClass) ?>">
         <h4><?php
