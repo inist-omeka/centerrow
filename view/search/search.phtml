@@ -68,6 +68,10 @@ endif;
 
 $this->headLink()->appendStylesheet($assetUrl('css/search.css', 'AdvancedSearch'));
 $this->headScript()->appendFile($assetUrl('js/search.js', 'AdvancedSearch'), 'text/javascript', ['defer' => 'defer']);
+
+$isBulkExport = false;
+if($plugins->has("bulkExport"))
+    $isBulkExport = true;
 ?>
 
 <?php if (empty($isPartial)): ?>
@@ -75,7 +79,6 @@ $this->headScript()->appendFile($assetUrl('js/search.js', 'AdvancedSearch'), 'te
 <?php endif; ?>
 
 <?php if ($itemSet): ?>
-
     <?php
     $vars->offsetSet('itemSet', $itemSet);
     $vars->offsetSet('resourceType', 'item_sets'); // TODO Check if really needed.
@@ -90,69 +93,77 @@ $this->headScript()->appendFile($assetUrl('js/search.js', 'AdvancedSearch'), 'te
     <?= $this->pageTitle($translate('Search'), 2) ?>
 <?php endif; ?>
 
-<?= $this->searchForm($searchPage, null, $skipFormAction) ?>
+<?= ""//$this->searchForm($searchPage, null, $skipFormAction) ?>
 
 <?php if (isset($response)): ?>
-
 <div class="search-results-wrapper">
     <div class="search-results">
+        <?php if($itemSetsCount || $itemsCount): ?>
+            <h3>
+                <?php if($itemSetsCount): ?>
+                    <span><?= sprintf($translatePlural('%s collection', '%s collections', $itemSetsCount), $itemSetsCount) ?></span>
+                <?php endif; ?>
+                <?php if($itemsCount): ?>
+                    <span><?= sprintf($translatePlural('%s contenu', '%s contenus', $itemsCount), $itemsCount) ?></span>
+                <?php endif; ?>
+            </h3>
+        <?php endif; ?>
 
         <?php if ($documentCount): ?>
-
-        <?php if ($displayPartsHeader): ?>
-        <div class="search-results-part search-results-header">
-            <?= $partial('search/results-header-footer', [
-                'site' => $site,
-                'searchPage' => $searchPage,
-                'query' => $query,
-                'response' => $response,
-                'itemSet' => $itemSet,
-                'resultPart' => 'header',
-                'documentCount' => $documentCount,
-            ]) ?>
-        </div>
-        <?php endif; ?>
-
-        <div class="search-results-part search-results-list">
-            <?php if ($itemSetsCount): ?>
-            <?= $partial('search/resource-list', [
-                'site' => $site,
-                'searchPage' => $searchPage,
-                'query' => $query,
-                'response' => $response,
-                'title' => sprintf($translatePlural('%s item set', '%s item sets', $itemSetsCount), $itemSetsCount),
-                'resourceName' => 'item_sets',
-            ]) ?>
+            <?php if ($displayPartsHeader): ?>
+                <div class="search-results-part search-results-header">
+                    <?= $partial('search/results-header-footer', [
+                        'site' => $site,
+                        'searchPage' => $searchPage,
+                        'query' => $query,
+                        'response' => $response,
+                        'itemSet' => $itemSet,
+                        'resultPart' => 'header',
+                        'documentCount' => $documentCount,
+                    ]) ?>
+                </div>
             <?php endif; ?>
 
-            <?php if ($itemsCount): ?>
-            <?= $partial('search/resource-list', [
-                'site' => $site,
-                'searchPage' => $searchPage,
-                'query' => $query,
-                'response' => $response,
-                'title' => sprintf($translatePlural('%s item', '%s items', $itemsCount), $itemsCount),
-                'resourceName' => 'items',
-            ]) ?>
+            <div class="search-results-part search-results-list">
+                <?php if ($itemSetsCount): ?>
+                    <?= $partial('search/resource-list', [
+                        'site' => $site,
+                        'searchPage' => $searchPage,
+                        'query' => $query,
+                        'response' => $response,
+                        'title' => null,
+                        'resourceName' => 'item_sets',
+                    ]) ?>
+                <?php endif; ?>
+                <?php if ($itemsCount): ?>
+                    <?= $partial('search/resource-list', [
+                        'site' => $site,
+                        'searchPage' => $searchPage,
+                        'query' => $query,
+                        'response' => $response,
+                        'title' => null,
+                        'resourceName' => 'items',
+                    ]) ?>
+                <?php endif; ?>
+            </div>
+
+            <?php if ($displayPartsFooter): ?>
+                <div class="search-results-part search-results-footer">
+                    <?= $partial('search/results-header-footer', [
+                        'site' => $site,
+                        'searchPage' => $searchPage,
+                        'query' => $query,
+                        'response' => $response,
+                        'itemSet' => $itemSet,
+                        'resultPart' => 'footer',
+                        'documentCount' => $documentCount,
+                    ]) ?>
+                    <?php if($isBulkExport): ?>
+                        <?= $this->bulkExport($response->getResources("items")) ?>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
-        </div>
-
-        <?php if ($displayPartsFooter): ?>
-        <div class="search-results-part search-results-footer">
-            <?= $partial('search/results-header-footer', [
-                'site' => $site,
-                'searchPage' => $searchPage,
-                'query' => $query,
-                'response' => $response,
-                'itemSet' => $itemSet,
-                'resultPart' => 'footer',
-                'documentCount' => $documentCount,
-            ]) ?>
-        </div>
-        <?php endif; ?>
-
         <?php else: ?>
-
             <div class="noresults">
                 <?php if (empty($query) && !$itemSet): ?>
                 <?= $translate('Fill a query and get results.') ?>
@@ -167,9 +178,7 @@ $this->headScript()->appendFile($assetUrl('js/search.js', 'AdvancedSearch'), 'te
                 <?= $translate('Your query returned no results') ?>
                 <?php endif; ?>
             </div>
-
         <?php endif; ?>
-
     </div>
 
     <?= $partial('search/facets', [
@@ -180,15 +189,12 @@ $this->headScript()->appendFile($assetUrl('js/search.js', 'AdvancedSearch'), 'te
         'itemSet' => $itemSet,
     ]) ?>
 </div>
-
 <?php else: ?>
-
 <div class="search-results-wrapper">
     <div class="search-results">
         <div class="noresults"><?= $translate('An error occured and your query returned no results.') ?></div>
     </div>
 </div>
-
 <?php endif; ?>
 
 <?php if (empty($isPartial)): ?>

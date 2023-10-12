@@ -41,11 +41,8 @@ if (!empty($itemSet)) {
 
 $options = $searchPage->setting('facet', []);
 ?>
-
 <aside class="search-facets">
-
     <h3><?= $translate('Facets') ?></h3>
-    <a href="?q="><?= $translate("Reset") ?></a>
 
     <?php if ($displayActive && count($activeFacets)): ?>
     <h4><?= $translate('Active facets') ?></h4>
@@ -64,7 +61,10 @@ $options = $searchPage->setting('facet', []);
         <?php if ($displayFacetButton && ($displayButton === 'above' || $displayButton === 'both')): ?>
         <div class="apply-facets apply-facets-top">
             <button id="apply-facets" type="submit"><?= $translate('Apply facets') ?></button>
+            <a class="reset-facets" href="?q="><?= $translate("Reset") ?></a>
         </div>
+        <?php else: ?>
+            <a class="reset-facets" href="?q="><?= $translate("Reset") ?></a>
         <?php endif; ?>
 
         <?php if (empty($facets) && empty($activeFacets)): ?>
@@ -93,6 +93,7 @@ $options = $searchPage->setting('facet', []);
         <?php if ($displayFacetButton && ($displayButton === 'below' || $displayButton === 'both')): ?>
         <div class="apply-facets apply-facets-bottom">
             <button id="apply-facets" type="submit"><?= $translate('Apply facets') ?></button>
+            <a class="reset-facets" href="?q="><?= $translate("Reset") ?></a>
         </div>
         <?php endif; ?>
 
