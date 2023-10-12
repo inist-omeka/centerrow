@@ -25,6 +25,21 @@
         });
 
         inlineGallery.openGallery();
+
+        // bouton visionneuse
+        $("#btn-lg").click(function(){
+            $("#itemfiles").toggle();
+            $("#lg-container-1").toggleClass("lg-inline");
+        });
+        $(".lg-maximize").click(function(){
+            $("#itemfiles").toggle();
+        });
+
+        $(".secondary-block .media img").click(function(){
+            $("#itemfiles").toggle();
+            let n = $(this).parent().index();
+		    $("#lg-container-1").toggleClass("lg-inline");
+            inlineGallery.slide(n-1);
+        });
     });
 })(jQuery)
-
