@@ -1,8 +1,168 @@
+.page #content{
+	max-width: 60%;
+}
+
 .page #content > h2{
 	text-align: center;
 }
 
-.page #content .text{
-	max-width: 60%;
-	margin: 0 auto;
+/* recherche avancée */
+#recherche-avancee #advanced-search-form #form-search{
+	column-count: 2;
+	width: 100%;
+}
+
+#recherche-avancee #form-search > .field{
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: .5rem 1rem;
+}
+
+#recherche-avancee #form-search > .field:first-child{
+	column-span: all;
+}
+
+#recherche-avancee #form-search > .field:last-child{
+	column-span: all;
+	padding: 0 1rem;
+}
+
+#search-filters{
+	column-span: all;
+}
+
+#recherche-avancee #form-search > .field > *{
+	width: 100%;
+	padding: 0;
+}
+
+#recherche-avancee #form-search .field .field-meta{
+	width: max-content;
+	padding: 0;
+	text-align: left;
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+#recherche-avancee #form-search .inputs{
+	width: 100%;
+	padding: 0;
+}
+
+#recherche-avancee #form-search .inputs input, #recherche-avancee #form-search .inputs select{
+	width: 100%;
+}
+
+#recherche-avancee #form-search > fieldset{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0;
+	padding: 1rem;
+}
+
+#recherche-avancee #form-search > fieldset[data-field-type="daterange"]{
+	margin-top: 1.5rem;
+}
+
+#recherche-avancee #form-search fieldset legend{
+	flex-basis: 100%;
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+#recherche-avancee #form-search fieldset .field{
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 1rem;
+	flex: 1;
+	margin: 0;
+}
+
+#recherche-avancee #form-search #search-filters{
+	padding: 1rem 1rem 0;
+}
+
+#recherche-avancee #search-filters .filter{
+	display: grid;
+	grid-template-columns: 1fr 4fr 4fr;
+	width: 100%;
+	gap: .5rem;
+	padding: 6px 0;
+}
+
+#recherche-avancee #search-filters .filter select{
+	margin: 0;
+	border-color: #aaa;
+}
+
+#recherche-avancee #search-filters .filter input{
+	grid-column: 1/4;
+	width: 100%;
+	margin: 0;
+}
+
+#recherche-avancee .chosen-container-single .chosen-single abbr{
+	top: 13px;
+}
+
+#recherche-avancee #form-search button{
+	font-size: 1.25rem;
+}
+
+/* liste des index */
+#index .references, #index #content > div > ul{
+	column-count: 3;
+}
+
+/* index */
+.reference-pagination.pagination{
+	margin: 1rem 0;
+	padding: 0;
+}
+
+/* .page #reference-headings{
+	column-count: 3;
+	break-inside: avoid;
+} */
+
+.page .reference-heading{
+	column-span: all;
+	margin: 0;
+	padding: 1rem 0;
+	font-size: 1.5rem;
+}
+
+.page .reference-heading:not(:first-child){
+	margin-top: 1rem;
+	border-top: 1px solid var(--primary);
+}
+
+.page .reference-record{
+	break-inside: avoid;
+}
+
+@media screen and (max-width: 1200px){
+	.page #content{
+		max-width: var(--max-width);
+	}
+
+	#home .preview-block ul .item.resource{
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* liste des index */
+	#index .references, .page #reference-headings{
+		column-count: 2;
+	}
+}
+
+@media screen and (max-width: 640px){
+	/* liste des index */
+	#index .references, .page #reference-headings{
+		column-count: 1;
+	}
 }
