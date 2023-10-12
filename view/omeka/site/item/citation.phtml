@@ -13,4 +13,7 @@ $months = ["January" => "Janvier", "February" => "Février", "March" => "Mars", 
             </div>
         </div>
     </div>
+    <?php if($isBulkExport): ?>
+        <?= $this->bulkExport($item, ["heading" => "Export", "divclass" => "property"]) ?>
+    <?php endif; ?>
 </div>

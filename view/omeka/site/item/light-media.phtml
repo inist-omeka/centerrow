@@ -1,0 +1,34 @@
+<?= $this->LightGalleryOutput($lightMedia); ?>
+<div class="medias">
+	<div><div id="btn-lg"><i class="fas fa-images"></i>Ouvrir la visionneuse</div></div>
+	<?php foreach ($lightMedia as $media): ?>
+		<div class="media">
+			<?php
+				$media = $media["media"];
+				$mediaValues = $media->values();
+				$eventManager = $media->getEventManager();
+				$args = $eventManager->prepareArgs(["values" => $mediaValues]);
+				$eventManager->trigger("rep.resource.display_values", $media, $args);
+				$mediaValues = $args["values"];
+				$mediaType = $media->mediaType();
+			?>
+			<?php if($media->title()): ?>
+				<h3><?= $media->title() ?></h3>
+			<?php endif; ?>
+			<?php if(count($mediaValues) > 0): ?>
+				<div class="properties foldable">
+					<h3>Métadonnées</h3>
+					<?= $this->partial("common/resource-values", ["values" => $mediaValues, "disableRebonds" => true]) ?>
+				</div>
+			<?php endif; ?>
+			<?php if(strpos($mediaType, "image") !== false): ?>
+				<img src="<?= $media->thumbnailUrl('large') ?>">
+			<?php elseif(strpos($mediaType, "pdf") !== false): ?>
+				<img src="<?= $media->thumbnailUrl('large') ?>">
+				<a href="<?= $media->originalUrl() ?>" target="_blank">Voir le pdf <i class="fas fa-external-link-alt"></i></a>
+			<?php elseif(strpos($mediaType, "video") !== false): ?>
+				<video controls allowfullscreen src="<?= $media->originalUrl() ?>"></video>
+			<?php endif; ?>
+		</div>
+	<?php endforeach; ?>
+</div>

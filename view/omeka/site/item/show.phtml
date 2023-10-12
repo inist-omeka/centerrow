@@ -22,6 +22,10 @@ $args = $eventManager->prepareArgs(["values" => $values]);
 $eventManager->trigger("rep.resource.display_values", $item, $args);
 $values = $args["values"];
 
+$isBulkExport = false;
+if($plugins->has("bulkExport"))
+    $isBulkExport = true;
+
 $propertiesGroup = $this->themeSetting("properties_group_items");
 $propertiesGroup = json_decode($propertiesGroup);
 if($propertiesGroup == null)
@@ -122,7 +126,7 @@ if($mediaCaption == null)
     <?php endforeach; ?>
 
     <?php if (isset($lightMedia)): ?>
-        <?= $this->LightGalleryOutput($lightMedia); ?>
+        <?= $this->partial('omeka/site/item/light-media', ["lightMedia" => $lightMedia]); ?>
     <?php endif; ?>
 
     <?php if (isset($otherMedia) && (count($otherMedia) > 0)): ?>
@@ -178,7 +182,7 @@ if($mediaCaption == null)
         <?php endif; ?>
     <?php endforeach; ?>
 
-    <?= $this->partial("omeka/site/item/citation", ["item" => $item, "site" => $site]) ?>
+    <?= $this->partial("omeka/site/item/citation", ["item" => $item, "site" => $site, "isBulkExport" => $isBulkExport]) ?>
 </div>
 
 <?= $item->embeddedJsonLd() ?>
