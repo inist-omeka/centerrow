@@ -98,7 +98,7 @@ if($plugins->has("bulkExport"))
 <?php if (isset($response)): ?>
 <div class="search-results-wrapper">
     <div class="search-results">
-        <?php if($itemSetsCount || $itemsCount): ?>
+        <?php if($documentCount): ?>
             <h3>
                 <?php if($itemSetsCount): ?>
                     <span><?= sprintf($translatePlural('%s collection', '%s collections', $itemSetsCount), $itemSetsCount) ?></span>
