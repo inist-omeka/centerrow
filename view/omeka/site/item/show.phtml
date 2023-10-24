@@ -26,6 +26,11 @@ $isBulkExport = false;
 if($plugins->has("bulkExport"))
     $isBulkExport = true;
 
+$markers = $this->api()->search('mapping_markers', ['item_id' => $item->id()])->getContent();
+$isMapping = true;
+if (!$markers)
+    $isMapping = false;
+
 $propertiesGroup = $this->themeSetting("properties_group_items");
 $propertiesGroup = json_decode($propertiesGroup);
 if($propertiesGroup == null)
@@ -167,14 +172,16 @@ if($mediaCaption == null)
         </div>
     <?php endif; ?>
 
-    <div class="mapping">
-        <?= $this->partial('mapping/index/show'); ?>
-        <?php foreach($propertiesGroup as $group): ?>
-            <?php if($group->position == "mapping" && count($group->values["values"]) > 0): ?>
-                <?= $this->partial("common/properties-group", ["group" => $group]) ?>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </div>
+    <?php if($isMapping): ?>
+        <div class="mapping">
+            <?= $this->partial('mapping/index/show'); ?>
+            <?php foreach($propertiesGroup as $group): ?>
+                <?php if($group->position == "mapping" && count($group->values["values"]) > 0): ?>
+                    <?= $this->partial("common/properties-group", ["group" => $group]) ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
     <?php foreach($propertiesGroup as $group): ?>
         <?php if($group->position == "secondary-end" && count($group->values["values"]) > 0): ?>
