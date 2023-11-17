@@ -72,7 +72,7 @@ if($inlineValues == null)
                     if ($language = $value->lang()):
                         ?><span class="language"><?php echo $language; ?></span><?php
                     endif;
-                    if($valueType == "literal"){
+                    if($valueType == "literal" || (strpos($valueType, "customvocab") !== false && !$value->uri())){
                         if(in_array($term, $rebonds)){
                             ?><a href="<?= $url('site', ['site-slug' => $siteSlug]); ?>/<?= $searchPage ?>?facet[<?= $facet ?>][]=<?= urlencode($value) ?>"><?= $value ?></a><?php
                         }
@@ -80,7 +80,7 @@ if($inlineValues == null)
                             echo $value;
                     }else if(strpos($valueType, 'resource') !== false)
                         echo str_replace("square", "medium", $value->asHtml());
-                    else if($valueType == "uri" || strpos($valueType, "valuesuggest") !== false){
+                    else if($valueType == "uri" || strpos($valueType, "valuesuggest") !== false || (strpos($valueType, "customvocab") !== false && $value->uri())){
                         if($term == "dcterms:license"){
                             foreach($licenses as $license){
                                 if(strpos($value->uri(), "/".$license."/") !== false){
@@ -102,6 +102,9 @@ if($inlineValues == null)
                         }
                         else if(strpos($valueType, "valuesuggest:pactols") !== false){
                             ?><a href="<?= $value->uri() ?>" target="_blank" class="frantiq" title="voir dans le thésaurus PACTOLS"><img src="<?= $this->assetUrl("img/icons/opentheso.png") ?>"></a><?php
+                        }
+                        else if(strpos($valueType, "valuesuggest:opentheso") !== false){
+                            ?><a href="<?= $value->uri() ?>" target="_blank" class="opentheso" title="voir dans OpenTheso"><img src="<?= $this->assetUrl("img/icons/opentheso.png") ?>"></a><?php
                         }
                         else if(parse_url($value->uri())["host"] != $serverHost){
                             ?><a href="<?= $value->uri() ?>" target="_blank"><i class="fas fa-external-link-alt"></i></a><?php
