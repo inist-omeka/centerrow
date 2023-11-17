@@ -107,9 +107,7 @@ if($plugins->has("bulkExport"))
                     <span><?= sprintf($translatePlural('%s contenu', '%s contenus', $itemsCount), $itemsCount) ?></span>
                 <?php endif; ?>
             </h3>
-        <?php endif; ?>
 
-        <?php if ($documentCount): ?>
             <?php if ($displayPartsHeader): ?>
                 <div class="search-results-part search-results-header">
                     <?= $partial('search/results-header-footer', [
