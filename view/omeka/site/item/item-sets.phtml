@@ -1,0 +1,14 @@
+<div class="properties" id="itemSets">
+	<div class="property">
+		<?php if(count($itemSets) > 1): ?>
+			<h4><?= $this->translate('Item sets'); ?></h4>
+		<?php else: ?>
+			<h4><?= $this->translate('Item set'); ?></h4>
+		<?php endif; ?>
+		<div class="values">
+			<?php foreach ($item->itemSets() as $itemSet): ?>
+				<div class="value"><a href="<?php echo $escape($itemSet->url()); ?>"><?php echo $itemSet->displayTitle(); ?></a></div>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</div>

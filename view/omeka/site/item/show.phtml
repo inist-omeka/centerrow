@@ -108,20 +108,7 @@ if($mediaCaption == null)
 <div class="secondary-block">
     <?php $itemSets = $item->itemSets(); ?>
     <?php if (count($itemSets) > 0): ?>
-        <div class="properties" id="itemSets">
-            <div class="property">
-                <?php if(count($itemSets) > 1): ?>
-                    <h4><?= $this->translate('Item sets'); ?></h4>
-                <?php else: ?>
-                    <h4><?= $this->translate('Item set'); ?></h4>
-                <?php endif; ?>
-                <div class="values">
-                    <?php foreach ($item->itemSets() as $itemSet): ?>
-                        <div class="value"><a href="<?php echo $escape($itemSet->url()); ?>"><?php echo $itemSet->displayTitle(); ?></a></div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
+        <?= $this->partial('omeka/site/item/item-sets', ["itemSets" => $itemSets]); ?>
     <?php endif; ?>
 
     <?php foreach($propertiesGroup as $group): ?>
