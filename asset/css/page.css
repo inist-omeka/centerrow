@@ -160,6 +160,32 @@
 	break-inside: avoid;
 }
 
+/* collecting */
+form[id^="collecting_form_"]{
+	display: flex;
+	flex-direction: column;
+}
+
+form[id^="collecting_form_"] input[type="text"],
+form[id^="collecting_form_"] input[type="url"],
+form[id^="collecting_form_"] input[type="email"],
+form[id^="collecting_form_"] select,
+form[id^="collecting_form_"] textarea{
+	width: 100%;
+}
+
+form[id^="collecting_form_"] .g-recaptcha > div{
+	margin-left: auto;
+}
+
+form[id^="collecting_form_"] .field-meta{
+	line-height: normal;
+}
+
+form[id^="collecting_form_"] input[type="submit"]{
+	margin-left: auto;
+}
+
 @media screen and (max-width: 1200px){
 	.page #content{
 		max-width: var(--max-width);
