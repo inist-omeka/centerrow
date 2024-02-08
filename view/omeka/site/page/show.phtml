@@ -4,6 +4,7 @@ echo $this->htmlElement('body')
 	->setAttribute("id", $page->slug());
 
 $this->headLink()->appendStylesheet($this->assetUrl('css/page.css'));
+$this->headLink()->appendStylesheet($this->assetUrl('css/block-plus.css', 'BlockPlus'));
 ?>
 
 <?= $this->content; ?>
