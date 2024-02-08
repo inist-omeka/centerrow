@@ -8,7 +8,7 @@ class SortMedia extends AbstractHelper
     public function __invoke($files = null) 
     { 
         $sortedMedia = [];
-        $whitelist = ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'video/flv', 'video/x-flv', 'video/mp4', 'video/m4v', 'video/webm', 'video/wmv', 'video/quicktime', 'application/pdf'];
+        $whitelist = ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'video/flv', 'video/x-flv', 'video/mp4', 'video/m4v', 'video/webm', 'video/wmv', 'video/quicktime'];
         $html5videos = [];
         $mediaCount = 0;
 
@@ -22,6 +22,8 @@ class SortMedia extends AbstractHelper
                     $sortedMedia['lightMedia'][$mediaCount]['tracks'] = [];
                 }
                 $mediaCount++;
+            }else if($mediaType == "application/pdf"){
+                $sortedMedia['pdfMedia'][] = $media;
             }else if($mediaRenderer == "iiif"){
                 $sortedMedia['iiifMedia'][] = $media;
             }else{

@@ -5,10 +5,16 @@
 		<div class="carousel-inner">
 	<?php endif; ?>
 	<?php foreach ($attachments as $attachment): ?>
-		<?php $asset = $attachment['asset']; ?>
-		<div class="asset carousel-item">
+		<?php
+			$asset = $attachment['asset'];
+			$class = ["asset"];
+			if(strpos($className, "carousel") !== false)
+				$class[] = "carousel-item";
+		?>
+		<div class="<?= implode(" ", $class) ?>">
 			<?php $assetImage = ($asset) ? $this->thumbnail($asset, 'square', ["title" => $attachment['caption']]) : ''; ?>
-			<?php if (array_key_exists('page', $attachment)): ?>
+			<?php $page = (array_key_exists('page', $attachment)) ? $attachment['page'] : null; ?>
+			<?php if($page): ?>
 				<?php $page = $attachment['page']; ?>
 				<a href="<?php echo $escape($page->siteUrl()); ?>">
 					<?php echo $assetImage; ?>

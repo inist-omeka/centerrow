@@ -59,8 +59,8 @@ $isPartial = $skipFormAction = !empty($skipFormAction);
 
 $documentCount = isset($response) ? $response->getTotalResults() : 0;
 if ($documentCount):
-    $itemSetsCount = $response->getResourceTotalResults('item_sets');
-    $itemsCount = $response->getResourceTotalResults('items');
+    $itemSetsCount = $response->getResourceTotalResults('item_sets') ?? 0;
+    $itemsCount = $response->getResourceTotalResults('items') ?? 0;
     $displayParts = $searchPage->setting('display', []);
     $displayPartsHeader = array_filter($displayParts, function ($v) { return in_array($v, ['header', 'both']); });
     $displayPartsFooter = array_filter($displayParts, function ($v) { return in_array($v, ['footer', 'both']); });

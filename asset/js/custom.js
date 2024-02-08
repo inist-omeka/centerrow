@@ -29,6 +29,15 @@ $(document).ready(() => {
 		$(this).parent().toggleClass("open");
 	});
 
+	// recherche avancée (select vers Solr)
+	if($("#recherche-avancee").length){
+		$(".inputs select[name*=':']").each(function(){
+			let name = $(this).attr("name");
+			let nameFacet = name.replace(":", "_") + "_ss";
+			$(`select[name='${name}']`).attr("name", nameFacet);
+		});
+	}
+
 	// carousel
 	if($(".carousel").length){
 		$(".carousel").each(function(){

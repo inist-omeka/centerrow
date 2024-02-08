@@ -1,6 +1,5 @@
 <?= $this->LightGalleryOutput($lightMedia); ?>
 <div class="medias">
-	<div><div id="btn-lg"><i class="fas fa-images"></i>Ouvrir la visionneuse</div></div>
 	<?php foreach ($lightMedia as $media): ?>
 		<div class="media">
 			<?php
@@ -23,9 +22,6 @@
 			<?php endif; ?>
 			<?php if(strpos($mediaType, "image") !== false): ?>
 				<img src="<?= $media->thumbnailUrl('large') ?>">
-			<?php elseif(strpos($mediaType, "pdf") !== false): ?>
-				<img src="<?= $media->thumbnailUrl('large') ?>">
-				<a href="<?= $media->originalUrl() ?>" target="_blank">Voir le pdf <i class="fas fa-external-link-alt"></i></a>
 			<?php elseif(strpos($mediaType, "video") !== false): ?>
 				<video controls allowfullscreen src="<?= $media->originalUrl() ?>"></video>
 			<?php endif; ?>

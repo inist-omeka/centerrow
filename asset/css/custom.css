@@ -12,6 +12,7 @@ html{
 
 /* page size */
 #wrap{
+	width: 100%;
 	max-width: none;
 	padding: 0;
 	background-color: white;
@@ -40,25 +41,10 @@ header .site-title{
 
 header > div{
 	display: flex;
+	gap: 0 .5rem;
 	align-items: center;
 	padding: 0 1rem;
 	margin-left: auto;
-}
-
-header nav{
-	position: relative;
-	/* z-index: 2000; */
-	flex-basis: 100%;
-}
-
-header nav .navigation{
-	margin: .5rem 0;
-	justify-content: center;
-	border: 0;
-}
-
-header nav .navigation a{
-	font-size: 1.25rem;
 }
 
 header .fas{
@@ -82,7 +68,6 @@ header #search button{
 /* qrcode */
 #share{
 	position: relative;
-	margin-left: .5rem;
 }
 
 #share i{
@@ -123,6 +108,8 @@ header #search button{
 
 /* menu */
 header nav{
+	position: relative;
+	/* z-index: 2000; */
 	flex-basis: 100%;
 }
 
@@ -165,7 +152,7 @@ header .navigation > .nav-item > a:hover, header .navigation > .nav-item > a[ari
 }
 
 .sub-nav.first{
-	max-width: none;
+	min-width: 100%;
 	width: max-content;
 	margin: 0;
 }
@@ -311,6 +298,10 @@ header .navigation > .nav-item > a:hover, header .navigation > .nav-item > a[ari
 /* content */
 #content img{
 	max-width: 100%;
+}
+
+#content p{
+	text-align: justify;
 }
 
 /* footer */
