@@ -135,27 +135,8 @@ if($mediaCaption == null)
     <?php endif; ?>
 
     <?php if (isset($iiifMedia) && (count($iiifMedia) > 0)): ?>
-        <div id="iiif-media" class="property">
-            <div class="values">
-                <?php foreach($iiifMedia as $media): ?>
-                    <div class="value">
-                        <a href="<?= $item->siteUrl()."/mirador"; ?>" target="_blank">
-                            <div class="iiif-thumbnail">
-                                <img src="<?= $media->thumbnailUrl('large') ?>"/>
-                            </div>
-                            <?php if($mediaCaption != "none"): ?>
-                                <div class="iiif-title">
-                                    <?php if($mediaCaption == "title"): ?>
-                                        <?= $media->displayTitle() ?>
-                                    <?php elseif($mediaCaption == "description"): ?>
-                                        <?= $media->displayDescription() ?>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endif; ?>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+        <div id="iiif-media">
+            <?= $this->mirador($item); ?>
         </div>
     <?php endif; ?>
 
